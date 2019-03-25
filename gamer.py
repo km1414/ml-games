@@ -1,49 +1,94 @@
 import gym
 import gym.spaces
-from models import RandomModel
+from models import RandomModel, PolicyGradientsModel
+import matplotlib.pyplot as plt
+plt.style.use('ggplot')
+import os
+
+
+os.environ['CUDA_VISIBLE_DEVICES'] = ''
+
 
 
 
 class Gamer:
 
     def __init__(self, game_name):
-        self.env = gym.make(game_name)
-        self.n_actions = self.env.action_space.n
+        self.game_name = game_name
+        self.env = gym.make(self.game_name)
         self.reward_history = []
+        self.mean_reward_history = []
+        self.game_id = 1
 
-    def get_action(self, observation, solver):
-            return solver.predict_action(observation)
 
-    def play_game(self, solver):
-        observation_before = self.env.reset()
+    def connect_model(self, model):
+        model.n_actions = self.env.action_space.n
+        self.model = model
+        self.model_name = model.__class__.__name__
+
+    def save_statistics(self, reward, print_frequency=1, plot_frequency=50):
+        self.reward_history.append(reward)
+        if self.game_id == 1:
+            mean_reward = reward
+            self.mean_reward_history.append(mean_reward)
+        else:
+            mean_reward = self.mean_reward_history[-1] * 0.99 + reward * 0.01
+            self.mean_reward_history.append(mean_reward)
+        self.game_id += 1
+        
+        if self.game_id % print_frequency == 0:
+            print('Game number: {0}, Game reward: {1}, Average reward: {2}, Model: {3}'.\
+                  format(self.game_id, reward, mean_reward, self.model_name))
+        if self.game_id % plot_frequency == 0:
+            self.save_plot()
+
+    def save_plot(self):
+        plot_title = self.game_name
+        fig = plt.figure()
+        plt.subplot(211)
+        plt.plot(self.reward_history)
+        plt.title('{0} - {1}'.format(self.model_name, plot_title))
+        plt.subplot(212)
+        plt.plot(self.mean_reward_history)
+        fig.savefig('images/{0}_{1}_history.png'.format(self.model_name, plot_title))
+        plt.close()
+
+    def play_game(self):
+        observation = self.env.reset()
         done = False
-        reward_sum = 0
-        output = []
+        reward_per_game = 0
 
         while not done:
-            action = self.get_action(observation_before, solver)
-            observation_after, reward, done, info =  self.env.step(action)
-            reward_sum += reward
-            output.append((observation_before, reward, reward_sum, done))
-            observation_before = observation_after
+            action = self.model.predict_action(observation)
+            observation, reward, done, info = self.env.step(action)
+            self.model.get_step_results(observation, reward, done, info)
+            reward_per_game += reward
 
-        return output
+        self.save_statistics(reward_per_game)
 
-    def play_multiple_games(self, n_games, solver):
-        games_data = [self.play_game(solver) for x in n_games * [0]]
-        return [item for sublist in games_data for item in sublist]
+
 
 
 
 
 # Test
-g = Gamer('Breakout-v0')
-r = RandomModel(n_actions=g.n_actions)
+controller = Gamer('Breakout-v0')
+model = RandomModel()
+controller.connect_model(model)
+for i in range(10000):
+    controller.play_game()
 
-for i in range(10):
-    print('Running iter:', i)
-    games_data = g.play_multiple_games(n_games=10, solver=r)
-    r.train_model(games_data)
+
+
+controller = Gamer('Breakout-v0')
+model = PolicyGradientsModel()
+controller.connect_model(model)
+for i in range(10000):
+    controller.play_game()
+
+
+
+
 
 
 
