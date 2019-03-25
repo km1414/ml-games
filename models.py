@@ -31,7 +31,7 @@ class PolicyGradientsModel:
     Resize observations to (observation_size, 1) arrays.
     """
     def __init__(self):
-        self.observation_size = 2048
+        self.observation_size = 1024
         self.learning_rate = 0.001
         self.gamma = 0.99
         self.train_frequency = 1

@@ -13,18 +13,22 @@ os.environ['CUDA_VISIBLE_DEVICES'] = ''
 
 class Gamer:
 
-    def __init__(self, game_name):
+    def __init__(self, game_name, video_frequency=None):
         self.game_name = game_name
+        self.video_frequency = video_frequency
         self.env = gym.make(self.game_name)
         self.reward_history = []
         self.mean_reward_history = []
         self.game_id = 1
 
-
     def connect_model(self, model):
         model.n_actions = self.env.action_space.n
         self.model = model
         self.model_name = model.__class__.__name__
+        if self.video_frequency is not None:
+            self.env = gym.wrappers.Monitor(self.env, 'video/{0}_{1}'.format(self.model_name, self.game_name),
+                               video_callable=lambda episode_id: episode_id % self.video_frequency == 0,
+                               force=True, uid='{0}_{1}'.format(self.model_name, self.game_name))
 
     def save_statistics(self, reward, print_frequency=1, plot_frequency=50):
         self.reward_history.append(reward)
@@ -43,14 +47,15 @@ class Gamer:
             self.save_plot()
 
     def save_plot(self):
-        plot_title = self.game_name
+        if not os.path.exists('images'):
+            os.mkdir('images')
         fig = plt.figure()
         plt.subplot(211)
         plt.plot(self.reward_history)
-        plt.title('{0} - {1}'.format(self.model_name, plot_title))
+        plt.title('{0} - {1}'.format(self.model_name, self.game_name))
         plt.subplot(212)
         plt.plot(self.mean_reward_history)
-        fig.savefig('images/{0}_{1}_history.png'.format(self.model_name, plot_title))
+        fig.savefig('images/{0}_{1}_history.png'.format(self.model_name, self.game_name))
         plt.close()
 
     def play_game(self):
@@ -80,7 +85,7 @@ for i in range(10000):
 
 
 
-controller = Gamer('Breakout-v0')
+controller = Gamer('Breakout-v0', video_frequency=100)
 model = PolicyGradientsModel()
 controller.connect_model(model)
 for i in range(10000):
