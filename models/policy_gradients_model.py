@@ -1,26 +1,6 @@
-import numpy as np
 import tensorflow as tf
+import numpy as np
 import scipy
-
-
-class RandomModel:
-
-    """
-    Baseline random model.
-    Predict random actions all the time.
-    """
-
-    def __init__(self):
-        self.n_actions = None
-
-    def predict_action(self, observation):
-        if self.n_actions is None:
-            print('Model not connected!')
-        action = np.random.randint(self.n_actions)
-        return action
-
-    def get_step_results(self, observation, reward, done, info):
-        pass
 
 
 class PolicyGradientsModel:
@@ -31,22 +11,24 @@ class PolicyGradientsModel:
     Resize observations to (observation_size, 1) arrays.
     """
     def __init__(self):
-        self.observation_size = 1024
+        self.observation_size = 4096
         self.learning_rate = 0.001
         self.gamma = 0.99
         self.train_frequency = 1
-        self.prev_x = None
-        self.prev_diff_x = None
+        self.previous_observation = None
+        self.difference_observation = None
+        self.n_actions = None
+        self.reset_games_data()
         self.game_id = 1
         self.step_id = 1
-        self.reset_games_data()
-        self.n_actions = None
 
     def build_neural_network(self):
         x = tf.placeholder(dtype=tf.float32, shape=[None, self.observation_size])
         y = tf.placeholder(dtype=tf.float32, shape=[None, self.n_actions])
-        weights = tf.Variable(tf.random_normal([self.observation_size, self.n_actions]))
+        weights = tf.Variable(tf.random_uniform([self.observation_size, self.n_actions],
+                                                minval = -0.1, maxval = 0.1))
         predictions = tf.nn.softmax(tf.matmul(x, weights))
+
 
         discounted_rewards = tf.placeholder(dtype=tf.float32, shape=[None, 1])
         mean, variance = tf.nn.moments(discounted_rewards, [0], shift=None)
@@ -84,7 +66,6 @@ class PolicyGradientsModel:
 
         if done:
             if self.game_id % self.train_frequency == 0:
-                print('Training model.')
                 self.train_model()
             self.game_id += 1
             self.step_id = 1
@@ -98,9 +79,9 @@ class PolicyGradientsModel:
             self.build_neural_network()
 
         # getting action from NN
-        self.x_cur, self.prev_x, self.prev_diff_x = self.prepare_obs(observation, self.prev_x, self.prev_diff_x)
-        self.processed_observation = self.x_cur
-        feed = {self.x: np.reshape(self.x_cur, (1, -1))}
+        self.processed_observation = self.augment_observation(observation)
+        self.processed_observation = self.processed_observation
+        feed = {self.x: np.reshape(self.processed_observation, (1, -1))}
         pred = self.sess.run(self.predictions, feed)[0, :]
         self.action = np.random.choice(self.n_actions, p=pred)
         self.label = np.zeros_like(pred)
@@ -117,26 +98,27 @@ class PolicyGradientsModel:
         _ = self.sess.run(self.train_step, feed)
         self.reset_games_data()
 
-    # resize observation to 2D and smaller size
-    def resize_obs(self, image):
-        image = image.reshape(1, -1)
-        image = scipy.misc.imresize(image, size=(1, self.observation_size))
-        image = (image / 255).ravel()
-        return image
-
     # merge observation with previous observations
-    def prepare_obs(self, observation, prev_x, prev_diff_x):
-        cur_x = self.resize_obs(observation)
-        if prev_x is None: prev_x = cur_x
-        diff_x = np.zeros_like(cur_x)
-        diff_x[cur_x != prev_x] = 1
-        if prev_diff_x is None: prev_diff_x = np.zeros_like(diff_x)
-        x = prev_diff_x * 0.8 + diff_x
-        x[x > 1] = 1
-        prev_x = cur_x
-        prev_diff_x = x
-        return x, prev_x, prev_diff_x
+    def augment_observation(self, observation):
 
+        # Resize observation
+        observation = observation.reshape(1, -1)
+        observation = scipy.misc.imresize(observation, size=(1, self.observation_size))
+        observation = (observation / 255).ravel()
+
+        # Augment observation
+        if self.previous_observation is None: 
+            self.previous_observation = observation
+        diff = np.zeros_like(observation)
+        diff[observation != self.previous_observation] = 1
+        if self.difference_observation is None: 
+            self.difference_observation = np.zeros_like(diff)
+        output = self.difference_observation * 0.8 + diff
+        output[output > 1] = 1
+        self.previous_observation = observation
+        self.difference_observation = output
+        return output
+    
     # discount rewards
     def discount_rewards(self, x):
         x = np.array(x).astype(float)
