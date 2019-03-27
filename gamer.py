@@ -1,3 +1,4 @@
+import numpy as np
 import gym
 import gym.spaces
 import matplotlib.pyplot as plt
@@ -5,17 +6,16 @@ plt.style.use('ggplot')
 import os
 import time
 
+
 # Use CPU for processing
 os.environ['CUDA_VISIBLE_DEVICES'] = ''
 
 
 class Gamer:
 
-    def __init__(self, game_name, print_frequency=1, plot_frequency=50, video_frequency=100):
+    def __init__(self, game_name, statistics_update_frequency=50):
         self.game_name = game_name
-        self.print_frequency = print_frequency
-        self.plot_frequency = plot_frequency
-        self.video_frequency = video_frequency
+        self.statistics_update_frequency = statistics_update_frequency
         self.env = gym.make(self.game_name)
         self.reward_history = []
         self.mean_reward_history = []
@@ -28,7 +28,7 @@ class Gamer:
         self.model_name = model.__class__.__name__
         self.env = gym.wrappers.Monitor(self.env, 'video/{0}_{1}_{2}'. \
                                format(self.model_name, self.game_name, self.start_time),
-                               video_callable=lambda episode_id: episode_id % self.video_frequency == 0,
+                               video_callable=lambda episode_id: episode_id % self.statistics_update_frequency == 0,
                                force=True, uid='{0}_{1}'.format(self.model_name, self.game_name))
 
     def save_statistics(self, reward):
@@ -37,14 +37,14 @@ class Gamer:
             mean_reward = reward
             self.mean_reward_history.append(mean_reward)
         else:
-            mean_reward = self.mean_reward_history[-1] * 0.99 + reward * 0.01
+            mean_reward = np.around(self.mean_reward_history[-1] * 0.99 + reward * 0.01, decimals=3)
             self.mean_reward_history.append(mean_reward)
-        
-        if self.game_id % self.print_frequency == 0:
-            print('Game: {0}, Number: {1}, Reward: {2}, Average reward: {3}, Model: {4}'.\
-                  format(self.game_name, self.game_id, reward, mean_reward, self.model_name))
-        if self.game_id % self.plot_frequency == 0:
+
+        if self.game_id % self.statistics_update_frequency == 0:
             self.plot_statistics()
+
+        print('Game: {0}, Number: {1}, Reward: {2}, Average reward: {3}, Model: {4}'. \
+              format(self.game_name, self.game_id, reward, mean_reward, self.model_name))
 
         self.game_id += 1
 

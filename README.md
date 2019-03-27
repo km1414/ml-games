@@ -2,7 +2,7 @@
 
 `conda create -n ml-games python=3.6 anaconda`
 
-`activate ml-games`
+`conda activate ml-games`
 
 `pip install -U numpy`
 
