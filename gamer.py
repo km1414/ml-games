@@ -13,7 +13,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = ''
 
 class Gamer:
 
-    def __init__(self, game_name, statistics_update_frequency=50):
+    def __init__(self, game_name, statistics_update_frequency=100):
         self.game_name = game_name
         self.statistics_update_frequency = statistics_update_frequency
         self.env = gym.make(self.game_name)
@@ -26,7 +26,7 @@ class Gamer:
         model.n_actions = self.env.action_space.n
         self.model = model
         self.model_name = model.__class__.__name__
-        self.env = gym.wrappers.Monitor(self.env, 'video/{0}_{1}_{2}'. \
+        self.env = gym.wrappers.Monitor(self.env, 'videos/{0}_{1}_{2}'. \
                                format(self.model_name, self.game_name, self.start_time),
                                video_callable=lambda episode_id: episode_id % self.statistics_update_frequency == 0,
                                force=True, uid='{0}_{1}'.format(self.model_name, self.game_name))
@@ -42,9 +42,11 @@ class Gamer:
 
         if self.game_id % self.statistics_update_frequency == 0:
             self.plot_statistics()
+            print('Statistics saved to /images')
+            print('Game recording saved to /videos')
 
-        print('Game: {0}, Number: {1}, Reward: {2}, Average reward: {3}, Model: {4}'. \
-              format(self.game_name, self.game_id, reward, mean_reward, self.model_name))
+        print('Game: {0}, Number: {1}, Reward: {2}, Average reward: {3}, Model: {4}, Started: {5}'. \
+              format(self.game_name, self.game_id, reward, mean_reward, self.model_name, self.start_time))
 
         self.game_id += 1
 
@@ -53,11 +55,14 @@ class Gamer:
             os.mkdir('images')
         fig = plt.figure()
         plt.subplot(211)
-        plt.plot(self.reward_history)
+        plt.plot(self.reward_history, color='b')
         plt.title('{0} - {1}'.format(self.model_name, self.game_name))
+        plt.legend(['Reward'], loc='upper left', facecolor='w')
         plt.subplot(212)
-        plt.plot(self.mean_reward_history)
-        fig.savefig('images/{0}_{1}_{2}_history.png'.format(self.model_name, self.game_name, self.start_time))
+        plt.plot(self.mean_reward_history, color='g')
+        plt.legend(['Average reward'], loc='upper left', facecolor='w')
+        fig.savefig('images/{0}_{1}_{2}_history.png'.\
+                    format(self.model_name, self.game_name, self.start_time), dpi=400)
         plt.close()
 
     def play_game(self):

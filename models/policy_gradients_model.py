@@ -15,8 +15,6 @@ class PolicyGradientsModel:
         self.learning_rate = 0.001
         self.gamma = 0.99
         self.train_frequency = 1
-        self.previous_observation = None
-        self.difference_observation = None
         self.n_actions = None
         self.reset_games_data()
         self.game_id = 1
@@ -56,6 +54,7 @@ class PolicyGradientsModel:
                             'done': [],
                             'info': [],
                           }
+
 
     def get_step_results(self, observation, reward, done, info):
         self.games_data['observation'].append(self.processed_observation)
@@ -107,12 +106,14 @@ class PolicyGradientsModel:
         observation = (observation / 255).ravel()
 
         # Augment observation
-        if self.previous_observation is None: 
+        if self.step_id == 1:
             self.previous_observation = observation
         diff = np.zeros_like(observation)
         diff[observation != self.previous_observation] = 1
-        if self.difference_observation is None: 
+
+        if self.step_id == 1:
             self.difference_observation = np.zeros_like(diff)
+
         output = self.difference_observation * 0.8 + diff
         output[output > 1] = 1
         self.previous_observation = observation
