@@ -1,9 +1,9 @@
 # ml-games
 
 Project, created to run reinforcement learning experiments in **gym** environments. 
-The idea is to separate processes of running the games and training the RL model in 
-order test and compare different algorithms. Currently works with **Atari** games from gym 
-and uses raw pixels input to predict discrete actions as an output.
+The idea is to create universal framework, that could be used to run the games as 
+well as comfortably test and compare different RL algorithms. Currently works with **Atari** 
+envs from gym and uses raw pixels input to predict discrete actions as an output.
 
 
 
@@ -13,11 +13,16 @@ and uses raw pixels input to predict discrete actions as an output.
 ---
 **Windows:**
 
-The easiest way to set up the system is to use **Anaconda**. After installation, run the following commends in **cmd.exe**:
+Download and install [**Anaconda**](https://www.anaconda.com/distribution/). 
+Open **cmd.exe** and run the following commands:
 
+Create conda env: 
 `conda create -n ml-games python=3.6 anaconda` 
 
+Activate conda env:
 `conda activate ml-games`
+
+Install/update required packages:
 
 `pip install -U numpy`
 
@@ -27,16 +32,26 @@ The easiest way to set up the system is to use **Anaconda**. After installation,
 
 `pip install --no-index -f https://github.com/Kojoley/atari-py/releases atari_py`
 
+Clone the project: 
+
+`git clone https://github.com/km1414/ml-games.git`
 
 
 ### Usage
 
 ---
-Clone the repo: `git clone https://github.com/km1414/ml-games.git`
+Open **cmd.exe**, navigate to project directory and activate previously created conda env. 
+Pick the game from **Atari** list and run it with selected model. 
+By default it will run 10k games, if want to change that, 
+add `-n_games` and the number to the command.
+More hyper-parameters for RL models could be changed directly in the scripts.
 
-Enter cloned repo: `cd ml-games`
+Command examples:
+`python main.py -game Breakout-v0 -model RandomModel`
+`python main.py -game Breakout-v0 -model RandomModel -n_games 20000`
 
-Run example with random decisions: `python main.py -game Breakout-v0 -model RandomModel`
+Watch results in the screen, then check **_images/_** and **_videos/_** 
+folders in the same directory to see the statistics and game recordings.
 
 
 
@@ -62,6 +77,11 @@ Based on simple neural network and Policy Gradients approach. Contains same meth
 TODO
 
 
+### Contribution
+
+---
+
+TODO
 
 
 
