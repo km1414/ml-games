@@ -1,9 +1,9 @@
 # ml-games
 
-Project, created to run reinforcement learning experiments in **gym** environments. 
+_Project, created to run reinforcement learning experiments in **gym** environments. 
 The idea is to create universal framework, that could be used to run the games as 
 well as comfortably test and compare different RL algorithms. Currently works with **Atari** 
-envs from gym and uses raw pixels input to predict discrete actions as an output.
+envs from gym and uses raw pixels input to predict discrete actions as an output._
 
 
 
@@ -47,11 +47,13 @@ add `-n_games` and the number to the command.
 More hyper-parameters for RL models could be changed directly in the scripts.
 
 Command examples:
+
 `python main.py -game Breakout-v0 -model RandomModel`
+
 `python main.py -game Breakout-v0 -model RandomModel -n_games 20000`
 
 Watch results in the screen, then check **_images/_** and **_videos/_** 
-folders in the same directory to see the statistics and game recordings.
+folders in the project directory to see the statistics and game recordings.
 
 
 
