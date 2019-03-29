@@ -40,6 +40,10 @@ Open _cmd.exe_ and run the following commands:**
 `git clone https://github.com/km1414/ml-games.git`
 
 
+### _Linux:_
+**TODO**
+
+
 ## Usage
 
 **Open _cmd.exe_, navigate to project directory and activate previously created conda env. 
@@ -78,10 +82,11 @@ and runs the projects according to user preferences.
 
 **RandomModel** - base line results of different envs making only random moves.
 
-<img src="/images/RandomModel_Bowling-v0_Thu_Mar_28_00-28-26_2019_history.png" height="320"/>
+<img src="/presentation/random_model/RandomModel_Bowling-v0_history.png" height="240"/><img src="/presentation/random_model/RandomModel_Bowling-v0.gif" height="240"/>
 
 ## Contribution
-TODO
+New models could be created and added to **/models**. They should contain same methods as 
+RandomModel and in order to run they should be added to **main.py**.
 
 
 
