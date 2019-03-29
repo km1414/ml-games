@@ -6,7 +6,7 @@ from models.policy_gradients_model import PolicyGradientsModel
 
 
 def main():
-    # Instantiate the parser
+    # Instantiate the argument parser
     parser = argparse.ArgumentParser(description='ml-games')
 
     # Add arguments

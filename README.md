@@ -8,21 +8,23 @@ envs from gym and uses raw pixels input to predict discrete actions as an output
 
 
 
-### Installation
+## Installation
 
 ---
-**Windows:**
+### Windows:
 
-Download and install [**Anaconda**](https://www.anaconda.com/distribution/). 
-Open **cmd.exe** and run the following commands:
+**Download and install [Anaconda](https://www.anaconda.com/distribution/). 
+Open _cmd.exe_ and run the following commands:**
 
-Create conda env: 
+**Create conda env:**
+
 `conda create -n ml-games python=3.6 anaconda` 
 
-Activate conda env:
+**Activate conda env:**
+
 `conda activate ml-games`
 
-Install/update required packages:
+**Install/update required packages:**
 
 `pip install -U numpy`
 
@@ -32,25 +34,25 @@ Install/update required packages:
 
 `pip install --no-index -f https://github.com/Kojoley/atari-py/releases atari_py`
 
-Clone the project: 
+**Clone the project:**
 
 `git clone https://github.com/km1414/ml-games.git`
 
 
-### Usage
+## Usage
 
 ---
-Open **cmd.exe**, navigate to project directory and activate previously created conda env. 
+**Open **cmd.exe**, navigate to project directory and activate previously created conda env. 
 Pick the game from **Atari** list and run it with selected model. 
 By default it will run 10k games, if want to change that, 
 add `-n_games` and the number to the command.
-More hyper-parameters for RL models could be changed directly in the scripts.
+More hyper-parameters for RL models could be changed directly in the scripts.**
 
-Command examples:
+Examples:**
 
 `python main.py -game Breakout-v0 -model RandomModel`
 
-`python main.py -game Breakout-v0 -model RandomModel -n_games 20000`
+`python main.py -game Pong-v0 -model PolicyGradientsModel -n_games 20000`
 
 Watch results in the screen, then check **_images/_** and **_videos/_** 
 folders in the project directory to see the statistics and game recordings.

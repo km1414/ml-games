@@ -13,6 +13,15 @@ os.environ['CUDA_VISIBLE_DEVICES'] = ''
 
 class Gamer:
 
+    """
+    This is the class for running the games, tracking statistics,
+    saving performance plots and saving game play videos.
+
+    Args:
+        game_name (str): env name from Atari gym (Breakout-v0, Pong-v0, ...)
+        statistics_update_frequency (int): when to plot and record video.
+    """
+
     def __init__(self, game_name, statistics_update_frequency=100):
         self.game_name = game_name
         self.statistics_update_frequency = statistics_update_frequency
@@ -23,15 +32,29 @@ class Gamer:
         self.game_id = 1
 
     def connect_model(self, model):
-        model.n_actions = self.env.action_space.n
+        """
+        Connects Gamer object and Model object in order to share env info.
+        Also adds game recording feature to self.env.
+
+        Args:
+            model (object): initialized decision model.
+        """
         self.model = model
+        self.model.get_env_features(self)
         self.model_name = model.__class__.__name__
         self.env = gym.wrappers.Monitor(self.env, 'videos/{0}_{1}_{2}'. \
                                format(self.model_name, self.game_name, self.start_time),
                                video_callable=lambda episode_id: episode_id % self.statistics_update_frequency == 0,
                                force=True, uid='{0}_{1}'.format(self.model_name, self.game_name))
 
-    def save_statistics(self, reward):
+    def track_statistics(self, reward):
+        """
+        Tracks game history and updates with new step data.
+        Also prints results to the screen and plots history to image.
+
+        Args:
+            reward (int/float): reward value after action done.
+        """
         self.reward_history.append(reward)
         if self.game_id == 1:
             mean_reward = reward
@@ -51,6 +74,9 @@ class Gamer:
         self.game_id += 1
 
     def plot_statistics(self):
+        """
+        Plot to game history to folder images/.
+        """
         if not os.path.exists('images'):
             os.mkdir('images')
         fig = plt.figure()
@@ -66,6 +92,9 @@ class Gamer:
         plt.close()
 
     def play_game(self):
+        """
+        Run the env and reset it when game finished.
+        """
         observation = self.env.reset()
         done = False
         reward_per_game = 0
@@ -76,5 +105,5 @@ class Gamer:
             self.model.get_step_results(observation, reward, done, info)
             reward_per_game += reward
 
-        self.save_statistics(reward_per_game)
+        self.track_statistics(reward_per_game)
 
