@@ -27,13 +27,15 @@ Open _cmd.exe_ and run the following commands:**
 
 **Install/update required packages:**
 
-`pip install -U numpy`
+```
+pip install -U numpy
 
-`pip install tensorflow`
+pip install tensorflow
 
-`pip install gym`
+pip install gym
 
-`pip install --no-index -f https://github.com/Kojoley/atari-py/releases atari_py`
+pip install --no-index -f https://github.com/Kojoley/atari-py/releases atari_py
+```
 
 **Clone the project:**
 
@@ -54,9 +56,11 @@ More hyper-parameters for RL models could be changed directly in the scripts.**
 
 **Examples:**
 
-`python main.py -game Breakout-v0 -model RandomModel`
+```
+python main.py -game Breakout-v0 -model RandomModel
 
-`python main.py -game Pong-v0 -model PolicyGradientsModel -n_games 20000`
+python main.py -game Pong-v0 -model PolicyGradientsModel -n_games 20000
+```
 
 **Performance statistics and game recordings will be saved in **_images/_** and **_videos/_**.**
 
