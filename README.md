@@ -82,8 +82,8 @@ and runs the projects according to user preferences.
 
 **RandomModel** - base line results of different envs making only random moves (10k games).
 
-<img src="/presentation/random_model/RandomModel_Bowling-v0_history.png" height="360"/><img src="/presentation/random_model/RandomModel_Boxing-v0_history.png" height="360"/>
-<img src="/presentation/random_model/RandomModel_Breakout-v0_history.png" height="360"/><img src="presentation/random_model/RandomModel_Pong-v0_history.png" height="360"/>
+<img src="/presentation/random_model/RandomModel_Bowling-v0_history.png" height="340"/><img src="/presentation/random_model/RandomModel_Boxing-v0_history.png" height="340"/>
+<img src="/presentation/random_model/RandomModel_Breakout-v0_history.png" height="340"/><img src="presentation/random_model/RandomModel_Pong-v0_history.png" height="340"/>
 
 ## Contribution
 New models could be created and added to **/models**. They should contain same methods as 
