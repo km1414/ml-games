@@ -34,7 +34,7 @@ class Gamer:
     def connect_model(self, model):
         """
         Connects Gamer object and Model object in order to share env info.
-        Also adds game recording feature to self.env.
+        Also adds game recording feature to self.env
 
         Args:
             model (object): initialized decision model.
