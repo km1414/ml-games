@@ -10,59 +10,51 @@ envs from gym and uses raw pixels input to predict discrete actions as an output
 
 
 
-## Installation
+## Setup
 
 ### _Windows:_
 
-**Download and install [Anaconda](https://www.anaconda.com/distribution/). 
-Open _cmd.exe_ and run the following commands:**
-
-**Create conda env:**
-
-`conda create -n ml-games python=3.6 anaconda` 
-
-**Activate conda env:**
-
-`conda activate ml-games`
-
-**Install/update required packages:**
+Download and install [Anaconda](https://www.anaconda.com/distribution/). Run:
 
 ```
+conda create -n ml-games python=3.6 anaconda 
+conda activate ml-games 
 pip install -U numpy
-
 pip install tensorflow
-
 pip install gym
-
 pip install --no-index -f https://github.com/Kojoley/atari-py/releases atari_py
 ```
 
-**Clone the project:**
-
-`git clone https://github.com/km1414/ml-games.git`
-
 
 ### _Linux:_
-**TODO**
 
+Download and install [Anaconda](https://www.anaconda.com/distribution/). Run:
+
+```
+sudo apt install -y python3-dev zlib1g-dev libjpeg-dev cmake swig python-pyglet python3-opengl libboost-all-dev libsdl2-dev libosmesa6-dev patchelf ffmpeg xvfb
+conda create -n ml-games python=3.6 anaconda 
+source activate ml-games 
+pip install -U numpy
+pip install tensorflow
+pip install 'gym[atari]'
+```
 
 ## Usage
 
-**Open _cmd.exe_, navigate to project directory and activate previously created conda env. 
-Pick the game from [Atari games list](https://gym.openai.com/envs/#atari) and run it with selected model. 
-By default it will run 10k games, in order to change that, 
-add **`-n_games`** and the number to the command.
-More hyper-parameters for RL models could be changed directly in the scripts.**
-
-**Examples:**
+Clone the project and activate conda env:
+```
+git clone https://github.com/km1414/ml-games.git
+conda activate ml-games 
+cd ml-games
+```
+Run selected [game](https://gym.openai.com/envs/#atari), model and number of games. Examples:
 
 ```
 python main.py -game Breakout-v0 -model RandomModel
-
 python main.py -game Pong-v0 -model PolicyGradientsModel -n_games 20000
 ```
 
-**Performance statistics and game recordings will be saved in **_images/_** and **_videos/_**.**
+Game statistics and recordings will be saved in **images/** and **videos/**.
 
 
 ## Repo overview
@@ -84,10 +76,11 @@ and runs the projects according to user preferences.
 
 ## Results
 
-**RandomModel** - base line results of different envs making only random moves (10k games).
+**PolicyGradientsModel** - Random moves vs. model after 10k games:
 
-<img src="/presentation/random_model/RandomModel_Bowling-v0_history.png" height="320"/><img src="/presentation/random_model/RandomModel_Boxing-v0_history.png" height="320"/>
-<img src="/presentation/random_model/RandomModel_Breakout-v0_history.png" height="320"/><img src="presentation/random_model/RandomModel_Pong-v0_history.png" height="320"/>
+<img src="/presentation/random_model/RandomModel_Bowling-v0_history.png" height="320"/><img src="/presentation/Bowling_random.gif" height="320"/><img src="/presentation/Bowling_10k.gif" height="320"/>
+<img src="/presentation/random_model/RandomModel_Breakout-v0_history.png" height="320"/>
+<img src="presentation/random_model/RandomModel_Pong-v0_history.png" height="320"/>
 
 ## Contribution
 New models could be created and added to **/models**. They should contain same methods as 
