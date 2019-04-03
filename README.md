@@ -78,7 +78,7 @@ and runs the projects according to user preferences.
 
 **PolicyGradientsModel** - Random moves vs. model after 10k games:
 
-<img src="/presentation/random_model/RandomModel_Bowling-v0_history.png" height="320"/><img src="/presentation/Bowling_random.gif" height="320"/><img src="/presentation/Bowling_10k.gif" height="320"/>
+<img src="/presentation/random_model/RandomModel_Bowling-v0_history.png" height="320"/> <img src="/presentation/Bowling_random.gif" height="320"/> <img src="/presentation/Bowling_10k.gif" height="320"/>
 <img src="/presentation/random_model/RandomModel_Breakout-v0_history.png" height="320"/>
 <img src="presentation/random_model/RandomModel_Pong-v0_history.png" height="320"/>
 
