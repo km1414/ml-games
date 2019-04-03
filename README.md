@@ -57,7 +57,18 @@ python main.py -game Pong-v0 -model PolicyGradientsModel -n_games 20000
 Game statistics and recordings will be saved in **images/** and **videos/**.
 
 
-## Repo overview
+
+## Results
+
+**PolicyGradientsModel** - Random moves vs. model after 10k games:
+
+<img src="/presentation/Bowling_random.gif" height="300"/> <img src="/presentation/Bowling_10k.gif" height="300"/> <img src="/presentation/PolicyGradientsModel_Bowling.png" height="300"/> 
+<img src="/presentation/Boxing_random.gif" height="300"/> <img src="/presentation/Boxing_10k.gif" height="300"/> <img src="/presentation/PolicyGradientsModel_Boxing.png" height="300"/> 
+<img src="/presentation/Breakout_random.gif" height="300"/> <img src="/presentation/Breakout_10k.gif" height="300"/> <img src="/presentation/PolicyGradientsModel_Breakout.png" height="300"/> 
+<img src="/presentation/Pong_random.gif" height="300"/> <img src="/presentation/Pong_10k.gif" height="300"/> <img src="/presentation/PolicyGradientsModel_Pong.png" height="300"/> 
+
+
+## Repo overview and contribution
 
 
 **gamer.py (Gamer)** - runs the games, tracks statistics and gets action from model. At the selected frequency plots game statistics 
@@ -74,20 +85,9 @@ Based on simple neural network and Policy Gradients approach. Contains same meth
 **main.py** Extracts command line arguments, loads initializes objects
 and runs the projects according to user preferences.
 
-## Results
 
-**PolicyGradientsModel** - Random moves vs. model after 10k games:
-
-<img src="/presentation/Bowling_random.gif" height="280"/> <img src="/presentation/Bowling_10k.gif" height="280"/> <img src="/presentation/PolicyGradientsModel_Bowling.png" height="280"/> 
-<img src="/presentation/Boxing_random.gif" height="280"/> <img src="/presentation/Boxing_10k.gif" height="280"/> <img src="/presentation/PolicyGradientsModel_Boxing.png" height="280"/> 
-<img src="/presentation/Breakout_random.gif" height="280"/> <img src="/presentation/Breakout_10k.gif" height="280"/> <img src="/presentation/PolicyGradientsModel_Breakout.png" height="280"/> 
-<img src="/presentation/Pong_random.gif" height="280"/> <img src="/presentation/Pong_10k.gif" height="280"/> <img src="/presentation/PolicyGradientsModel_Pong.png" height="280"/> 
-
-
-
-## Contribution
-New models could be created and added to **/models**. They should contain same methods as 
-RandomModel and in order to run they should be added to **main.py**.
+_New models could be created and added to **/models**. They should contain same methods as 
+RandomModel and in order to run they should be added to **main.py**._
 
 
 
