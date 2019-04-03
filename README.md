@@ -78,10 +78,10 @@ and runs the projects according to user preferences.
 
 **PolicyGradientsModel** - Random moves vs. model after 10k games:
 
-<img src="/presentation/PolicyGradientsModel_Bowling.png" height="320"/> <img src="/presentation/Bowling_random.gif" height="320"/> <img src="/presentation/Bowling_10k.gif" height="320"/>
-<img src="/presentation/PolicyGradientsModel_Boxing.png" height="320"/> <img src="/presentation/Boxing_random.gif" height="320"/> <img src="/presentation/Boxing_10k.gif" height="320"/>
-<img src="/presentation/PolicyGradientsModel_Breakout.png" height="320"/> <img src="/presentation/Breakout_random.gif" height="320"/> <img src="/presentation/Breakout_10k.gif" height="320"/>
-<img src="/presentation/PolicyGradientsModel_Pong.png" height="320"/> <img src="/presentation/Pong_random.gif" height="320"/> <img src="/presentation/Pong_10k.gif" height="320"/>
+<img src="/presentation/Bowling_random.gif" height="280"/> <img src="/presentation/Bowling_10k.gif" height="280"/> <img src="/presentation/PolicyGradientsModel_Bowling.png" height="280"/> 
+<img src="/presentation/Boxing_random.gif" height="280"/> <img src="/presentation/Boxing_10k.gif" height="280"/> <img src="/presentation/PolicyGradientsModel_Boxing.png" height="280"/> 
+<img src="/presentation/Breakout_random.gif" height="280"/> <img src="/presentation/Breakout_10k.gif" height="280"/> <img src="/presentation/PolicyGradientsModel_Breakout.png" height="280"/> 
+<img src="/presentation/Pong_random.gif" height="280"/> <img src="/presentation/Pong_10k.gif" height="280"/> <img src="/presentation/PolicyGradientsModel_Pong.png" height="280"/> 
 
 
 
