@@ -1,6 +1,6 @@
 # ml-games
 
----
+<img src="/presentation/0.gif" height="50"/> <img src="/presentation/1.gif" height="50"/> <img src="/presentation/2.gif" height="50"/> <img src="/presentation/3.gif" height="50"/> <img src="/presentation/4.gif" height="50"/> <img src="/presentation/5.gif" height="50"/> <img src="/presentation/6.gif" height="50"/> <img src="/presentation/7.gif" height="50"/> <img src="/presentation/8.gif" height="50"/> <img src="/presentation/9.gif" height="50"/>
 
 _Project, created to run reinforcement learning experiments in **gym** environments. 
 The idea is to create universal framework, that could be used to run the games as 
