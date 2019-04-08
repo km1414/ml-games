@@ -9,7 +9,10 @@ class PolicyGradientsModel:
     Policy Gradients model.
     https://medium.com/@jonathan_hui/rl-policy-gradients-explained-9b13b688b146
 
-    Resize observations to (observation_size, 1) arrays.
+    observation_size: resize every observations to (observation_size, 1) arrays.
+    learning_rate: learning rate for neural network.
+    gamma: discount rate for rewards
+    train_frequency: train every train_frequency games.
     """
 
     def __init__(self):

@@ -26,7 +26,7 @@ pip install --no-index -f https://github.com/Kojoley/atari-py/releases atari_py
 ```
 
 
-### _Linux:_
+### _Ubuntu:_
 
 Download and install [Anaconda](https://www.anaconda.com/distribution/). Run:
 
